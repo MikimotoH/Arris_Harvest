@@ -5,53 +5,54 @@ Harvest Arris firmware
 http://arris.force.com/consumers/ConsumerProductDetail?p=a0ha000000NJnxXAAT&c=Touchstone%20Modems%20and%20Gateways#panel4 
 
 #### enumerate files
->>> $('div#panel4 div.medium-4 div.small-9 div')[0].textContent.trim()
-  "USB Drivers Win 98 SE"
+```javascript
+$('div#panel4 div.medium-4 div.small-9 div')[0].textContent.trim();
+"USB Drivers Win 98 SE"
+```
 
 #### click tab 'Firmware'
->>> $('dl.small-12 a')[3].textContent.trim()
- "Drivers & Firmware"
+```javascript
+$('dl.small-12 a')[3].textContent.trim();
+"Drivers & Firmware"
+```
 
 #### get Model Name
->>> $('div.medium-6:nth-child(2) div:nth-child(1)  p')[0].textContent.trim()
- "CM550"
->>> var modelDesc = $('div.medium-6:nth-child(2) > div:nth-child(3) > p:nth-child(1)')[0].textContent.trim()
+```javascript
+$('div.medium-6:nth-child(2) div:nth-child(1)  p')[0].textContent.trim();
+"CM550"
+var modelDesc = $('div.medium-6:nth-child(2) > div:nth-child(3) > p:nth-child(1)')[0].textContent.trim();
+```
 
 #### get Model Picture
->>> aa= $('.box.boxProduct')[0]
->>> aa.getAttribute('style')
+```javascript
+var aa= $('.box.boxProduct')[0];
+aa.getAttribute('style');
 "background: url(https://arris--c.na13.content.force.com/servlet/servlet.ImageServer?id=015a0000003NYHt&oid=00D30000000kUAL&lastMod=1442430676000);"
-
+```
 
 ### enumerate models under Touchstone series
 http://arris.force.com/consumers/ConsumerProductList?c=Touchstone%20Modems%20and%20Gateways
 
 #### get all button links to Model Detail Page
->>> $('div.large-4  a.button')
-get all button link to model detail page
+```javascript
+$('div.large-4  a.button');
+```
 
 #### get all model names
->>> $('div.large-4  h6')[87].textContent.trim()
- "WTM652G/NA"
+```javascript
+$('div.large-4  h6')[87].textContent.trim();
+"WTM652G/NA"
+```
  
 #### get picture of model
->>> var aa = $('div.box.boxProduct')[0]
->>> aa.getAttribute('style')
- "background: url(https://arris--c.na13.content.force.com/servlet/servlet.ImageServer?id=015a0000003NYHt&oid=00D30000000kUAL&lastMod=1442430676000);"
+```javascript
+var aa = $('div.box.boxProduct')[0];
+aa.getAttribute('style');
+"background: url(https://arris--c.na13.content.force.com/servlet/servlet.ImageServer?id=015a0000003NYHt&oid=00D30000000kUAL&lastMod=1442430676000);"
+```
 
 ### enumerate series under Arris Support Home
 http://arris.force.com/consumers
-
-#### get all Series
->>> $('div.small-12 a.button').length
- 8
-
->>> $('div.small-12 a.button')[0].textContent.trim()
- "Go to Models"
-
-#### get Series Name
->>> $('div.small-12 h6')[0].textContent.trim()
- "SURFboard® CABLE MODEMS AND GATEWAYS"
 
 ```python
 In [379]: driver = harvest_utils.getFirefox()
