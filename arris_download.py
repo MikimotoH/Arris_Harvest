@@ -36,7 +36,10 @@ def main():
             if file_sha1:
                 continue
             uprint('idx=%d'%idx)
-            local_file  = downloadFile(file_url, "Content-Disposition")
+            try:
+                local_file  = downloadFile(file_url, "Content-Disposition")
+            except TypeError:
+                continue
             file_sha1 = getFileSha1(local_file)
             file_size = path.getsize(local_file)
             csr.execute(
