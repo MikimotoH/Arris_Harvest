@@ -45,7 +45,7 @@ def main():
             conn.commit()
             ftp = ftputil.FTPHost(ftpHostName,ftpUserName,ftpPassword)
             uprint('upload to GRID')
-            ftp.upload(local_file, path.basename(dstPath))
+            ftp.upload(local_file, path.basename(local_file))
             ftp.close()
             os.remove(local_file)
     except Exception as ex:

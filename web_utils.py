@@ -6,6 +6,7 @@ import html2text
 from lxml import etree
 import lxml
 import re
+from my_utils import uprint
 
 
 def firefox_url_req(url: str) -> request.Request:
@@ -112,7 +113,7 @@ def downloadFile(url:str, fname:str, timeOut:int=10, chunkSize:int=2*1024*1024,
                     """
                     Content-Disposition: attachment; filename="SBRAC1750-1.0.9.img"
                     """
-                    cdval = resp.info().items()['Content-Disposition']
+                    cdval = resp.info()['Content-Disposition']
                     fname = re.search(r'filename="(.+)(?<!\\)"', cdval).group(1)
                     uprint('fname="%s"'%fname)
 
@@ -124,7 +125,7 @@ def downloadFile(url:str, fname:str, timeOut:int=10, chunkSize:int=2*1024*1024,
                             print('',flush=True)
                             import os
                             os.rename(fname+".part", fname)
-                            return
+                            return fname
                         fout.write(data)
                         fout.flush()
                 import pdb; pdb.set_trace()
@@ -150,7 +151,7 @@ def safeFileName(name:str)->str:
     return ''.join(_ if bb.match(_) else pq(_) for _ in name)
 
 
-def getFileSha1(fileName)->str:
+def getFileSha1(fileName:str)->str:
     import hashlib
     def sha1(data)->str:
         return hashlib.sha1(data).hexdigest()
@@ -158,8 +159,9 @@ def getFileSha1(fileName)->str:
         data = fin.read()
         return sha1(data)
 
-def elmToMd(elm:lxml.html.Element, ignore_links=True, ignore_images=True, 
-        ignore_emphasis=True):
+from lxml.html import Element
+def elmToMd(elm:Element, ignore_links=True, ignore_images=True, 
+        ignore_emphasis=True)->str:
     html = etree.tostring(elm).decode('utf-8')
     h = html2text.HTML2Text()
     h.body_width=0
