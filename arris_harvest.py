@@ -137,16 +137,15 @@ def detailScraper(baseUrl):
         for idx in range(startIdx, numFiles):
             file_name = '\n'.join(_.strip() for _ in files[idx].text_content().splitlines() if _.strip())
             file_name = file_name.splitlines()[0].strip()
-            if not file_name:
+            ulog('file_name="%s"'%file_name)
+            if re.match(r'No .+ Available', file_name, re.I):
                 upsertModel(model, image_url, dev_desc, dev_hstore, baseUrl, str(prevTrail))
                 continue
 
             try:
-                fw_ver = re.search(r"(\d(\.\d+)*)$", file_name).group(1)
-            except IndexError:
-                upsertModel(model, image_url, dev_desc, dev_hstore, baseUrl, str(prevTrail))
-                continue
-            assert file_name
+                fw_ver = re.search(r"\d\.[\w\.\-]+", file_name).group(0)
+            except AttributeError:
+                fw_ver = file_name
             file_urls = files[idx].cssselect('a')
             if not file_urls:
                 ulog('No files')
