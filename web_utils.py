@@ -108,6 +108,14 @@ def downloadFile(url:str, fname:str, timeOut:int=10, chunkSize:int=2*1024*1024,
             with request.urlopen(firefox_url_req(url),
                 timeout=timeOut) as resp:
                 uprint("resp_headers=%s"%(resp.info().items()))
+                if fname == 'Content-Disposition':
+                    """
+                    Content-Disposition: attachment; filename="SBRAC1750-1.0.9.img"
+                    """
+                    cdval = resp.info().items()['Content-Disposition']
+                    fname = re.search(r'filename="(.+)(?<!\\)"', cdval).group(1)
+                    uprint('fname="%s"'%fname)
+
                 with open(fname+".part", mode='wb') as fout:
                     while True:
                         data=resp.read(chunkSize)
